@@ -8,22 +8,24 @@ UserConversationOverview = React.createClass({
     return {
       dataLoaded: handle.ready() && Meteor.userId(),
       currentUser: currentUser,
-      conversations: currentUser.conversations()
+      conversations: Meteor.conversations.find().fetch()
     }
   },
   getConversations(){
     let conversations = this.data.conversations
     if(conversations.length > 0){
       return conversations.map((conversation)=>{
-        let participants = conversation.participants.forEach((participant)=>{
-          participant.user().username
+        let users = new Array()
+        conversation.participants().forEach((participant)=>{
+          users.push(participant.user().username)
         })
+        console.log(users)
 
         return <li className="collection-item avatar">
           <a href={FlowRouter.path("", {conversationId: conversation._id})} >
           <i className="material-icons circle">mail</i>
           <span className="title">{}</span>
-          <p className="flow-text truncate">{conversation.lastMessage.user.username}: {conversation.lastMessage.body}</p>
+          <p className="flow-text truncate">{conversation.lastMessage().user.username}: {conversation.lastMessage().body}</p>
           </a>
         </li>
       })
@@ -50,6 +52,7 @@ UserConversationOverview = React.createClass({
     </div>
   },
   render(){
+    console.log(this.data.conversations);
     if(this.data.dataLoaded){
       return this.getContent()
     }
