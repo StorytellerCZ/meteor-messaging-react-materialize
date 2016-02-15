@@ -15,9 +15,14 @@ Package.onUse(function(api) {
 
   api.imply(['socialize:messaging', 'djedi:sanitize-html'])
 
-  api.addFiles(['components/Conversation.jsx', 'components/UserOverview.jsx'], "client");
+  api.addFiles(['components/Conversation.jsx', 'components/UserOverview.jsx', 'components/NewConversation.jsx'], "client");
 
-  api.export(['UserConversation', 'UserConversationOverview'], "client");
+  //temporary user search till Meteor 1.3
+  api.addFiles(['server/searchForUser.js'], 'server')
+
+  api.addFiles('searchSuggestions.css');
+
+  api.export(['UserConversation', 'UserConversationOverview', 'UserNewConversation'], "client");
 });
 
 Package.onTest(function(api) {

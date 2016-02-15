@@ -1,0 +1,50 @@
+/* TODO right now hacky, SCSS would be good, but it doesn't account for time when developers use Materialize with only CSS */
+.search-suggestions-box{
+  position: absolute;
+  width: 100%;
+  top: 38px;
+  left: 0;
+  z-index: 1000;
+  margin: 0.5rem 0 1rem 0;
+  border: 1px solid #e0e0e0;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.search-suggestions-box a.suggestion-item{
+  display: block;
+  transition: .25s;
+  color: #3949ab;
+}
+
+.search-suggestions-box a.suggestion-item:hover {
+    background-color: #ddd;
+}
+
+.suggestion-item{
+  padding: 10px 20px;
+  margin: 0;
+  border-bottom: 1px solid #e0e0e0;
+  line-height: 1.5rem;
+  background-color: #fff
+}
+
+.suggestions-item .title {
+  font-size: 16px;
+}
+
+.suggestions-item .avatar{
+  min-height: 75px;
+  padding-left: 72px;
+  position: relative;
+}
+
+.suggestions-item.avatar .circle{
+  position: absolute;
+  width: 42px;
+  height: 42px;
+  overflow: hidden;
+  left: 15px;
+  display: inline-block;
+  vertical-align: middle;
+}
