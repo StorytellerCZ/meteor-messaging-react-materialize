@@ -15,17 +15,21 @@ UserConversationOverview = React.createClass({
     let conversations = this.data.conversations
     if(conversations.length > 0){
       return conversations.map((conversation)=>{
-        let users = new Array()
+        let usersArray = new Array()
         conversation.participants().forEach((participant)=>{
-          users.push(participant.user().username)
+          usersArray.push(participant.user().username)
         })
-        console.log(users)
+
+        let users = usersArray[0]
+        for (let i = 1; i < usersArray.length; i++) {
+          users = users + ", " + usersArray[i]
+        }
 
         return <li className="collection-item avatar">
-          <a href={FlowRouter.path("", {conversationId: conversation._id})} >
+          <a href={FlowRouter.path("pm-conversation", {conversationId: conversation._id})} >
           <i className="material-icons circle">mail</i>
-          <span className="title">{}</span>
-          <p className="flow-text truncate">{conversation.lastMessage().user.username}: {conversation.lastMessage().body}</p>
+          <span className="title">{users}</span>
+          <p className="flow-text truncate">{conversation.lastMessage().user().username}: {conversation.lastMessage().body}</p>
           </a>
         </li>
       })
@@ -52,7 +56,6 @@ UserConversationOverview = React.createClass({
     </div>
   },
   render(){
-    console.log(this.data.conversations);
     if(this.data.dataLoaded){
       return this.getContent()
     }

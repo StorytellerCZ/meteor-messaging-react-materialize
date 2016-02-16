@@ -9,7 +9,7 @@ UserConversation = React.createClass({
       //confirm that user can view the conversation
       let access = false
 
-      conversation.participants.forEach((p) => {
+      conversation.participants().forEach((p) => {
         if(p.user()._id === Meteor.userId()){
           access = true
         }
