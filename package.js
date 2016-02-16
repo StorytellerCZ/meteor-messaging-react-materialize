@@ -11,9 +11,9 @@ Package.onUse(function(api) {
   api.use(['meteor', 'ecmascript', 'react@0.14.3', 'check', 'accounts-password']);
 
   //other packages in use
-  api.use(['socialize:messaging@0.4.4', 'djedi:sanitize-html@1.11.2']);
+  api.use(['socialize:messaging@0.4.4', 'djedi:sanitize-html@1.11.2', 'momentjs:moment@2.11.2']);
 
-  api.imply(['socialize:messaging', 'djedi:sanitize-html'])
+  api.imply(['socialize:messaging', 'djedi:sanitize-html', 'momentjs:moment'])
 
   api.addFiles(['components/Conversation.jsx', 'components/UserOverview.jsx', 'components/NewConversation.jsx', 'components/NewMessage.jsx'], "client");
 
