@@ -1,13 +1,21 @@
+// TODO: separate into 3 components: conversationWindow, conversationReply, conversationParticipants
 UserConversation = React.createClass({
   mixins: [ReactMeteorData],
+  getInitialState(){
+    return {
+      viewing: null,
+      typing: null,
+      msgLimit: 10,
+      msgTotal: 1
+    }
+  },
   getMeteorData(){
     if(this.props.conversationId){
-      const handleConv = Meteor.subscribe("messagesFor", this.props.conversationId, {limit: 20, skip: 0})
+      const handleConv = Meteor.subscribe("messagesFor", this.props.conversationId, {limit: this.state.msgLimit, skip: 0})
       const handleMsg = Meteor.subscribe("conversation", this.props.conversationId);
 
       if(handleConv.ready() && handleMsg.ready()){
-        //let conversation = Meteor.conversations.findOne({_id: this.props.conversationId})
-        let msg = Meteor.messages.find({conversationId: this.props.conversationId}).fetch()
+        let msg = Meteor.messages.find({conversationId: this.props.conversationId}, {sort: {date: 1}}).fetch()
         let conv = Meteor.conversations.findOne({_id: this.props.conversationId})
 
         //confirm that user can view the conversation
@@ -43,18 +51,26 @@ UserConversation = React.createClass({
     }
   },
   componentDidMount(){
-    const viewing = Meteor.subscribe("viewingConversation", this.props.conversationId)
     this.setState({
-      viewing: viewing
+      viewing: Meteor.subscribe("viewingConversation", this.props.conversationId)
+    })
+
+    //get the total number of documents from server
+    Meteor.call("countMessages", this.props.conversationId, (error, result)=>{
+      if(error){
+        console.log(error)
+      }
+      if(result){
+        this.setState({
+          msgTotal: result
+        })
+      }
     })
   },
   isTyping(){
-    const typing = Meteor.subscribe("typing", this.props.conversationId)
-    if(typing.ready()){
-      this.setState({
-        typing: typing
-      })
-    }
+    this.setState({
+      typing: Meteor.subscribe("typing", this.props.conversationId)
+    })
   },
   isNotTyping(){
     this.state.typing.stop()
@@ -62,15 +78,19 @@ UserConversation = React.createClass({
   componentWillUnmount(){
     this.state.viewing.stop()
   },
+  showOlder(){
+    this.setState({
+      msgLimit: this.state.msgLimit + 10
+    })
+  },
   getMessages(){
     let messages = this.data.messages
     return messages.map((msg)=>{
-      console.log(msg)
       let user = msg.user()
 
       return <div key={msg._id} className="row">
-        <div className="col s10"><p><strong>{user.username}:</strong> {msg.body}</p></div>
-        <div className="col s2">{msg.date}</div>
+        <div className="col s10"><strong>{user.username}:</strong> {msg.body}</div>
+        <div className="col s2">{moment(msg.date).fromNow()}</div>
       </div>
     })
   },
@@ -80,17 +100,51 @@ UserConversation = React.createClass({
     let msg = $('#messageToSend').val()
 
     //send the message
+    //TODO sanitize
     let send = this.data.conversation.sendMessage(msg)
-    console.log(send)
+
+    //increase the limit so the current conversation stays on the screen
+    this.setState({
+      msgLimit: this.state.msgLimit + 1
+    })
 
     //reset the text field
     $('#messageToSend').val("")
+
+    //update the total message count
+    //TODO: figure a better way that is not too taxing on the servers to count messages whenever any user adds a message
+    //currently this is not very accurate if the user doesn't post much and the other post a lot
+    Meteor.call("countMessages", this.props.conversationId, (error, result)=>{
+      if(error){
+        console.log(error)
+      }
+      if(result){
+        this.setState({
+          msgTotal: result
+        })
+      }
+    })
   },
   getContent(){
-    console.log(this.data.messages)
+    let showOlder
+
+    if(this.state.msgTotal > this.state.msgLimit){
+      showOlder = <a className="center-align" href="#!" onClick={this.showOlder}>Show older messages.</a>
+    }
+
     return (<div>
-      <h1>Conversation with </h1>
-      {this.getMessages()}
+      <div className="row">
+        <div className="col s12 m10 l10">
+          <div className="card-panel chatWindow">
+            {showOlder}
+            {this.getMessages()}
+          </div>
+        </div>
+        <div className="chatParticipants col hide-on-small-only m2 l2">
+          <div className="card-panel"></div>
+        </div>
+      </div>
+
       <form method="post" onSubmit={this.sendMessage}>
         <fieldset>
           <legend>Send message</legend>

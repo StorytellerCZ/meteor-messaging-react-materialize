@@ -142,6 +142,8 @@ UserNewMessage = React.createClass({
       converstation.addParticipant(user)
     })
 
+    //TODO sanitize
+
     //send the message
     converstation.sendMessage(msg)
 
