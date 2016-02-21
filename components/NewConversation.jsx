@@ -20,7 +20,7 @@ UserNewConversation = React.createClass({
     let users = this.props.users
 
     if(users === undefined){
-      users = new Array()
+      users = []
     }
 
     let type = "choosing"

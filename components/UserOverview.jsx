@@ -15,7 +15,7 @@ UserConversationOverview = React.createClass({
     let conversations = this.data.conversations
     if(conversations.length > 0){
       return conversations.map((conversation)=>{
-        let usersArray = new Array()
+        let usersArray = []
         conversation.participants().forEach((participant)=>{
           usersArray.push(participant.user().username)
         })
