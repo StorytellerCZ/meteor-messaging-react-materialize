@@ -142,7 +142,8 @@ UserNewMessage = React.createClass({
       converstation.addParticipant(user)
     })
 
-    //TODO sanitize
+    //sanitize
+    msg = sanitizeHtml(msg)
 
     //send the message
     converstation.sendMessage(msg)

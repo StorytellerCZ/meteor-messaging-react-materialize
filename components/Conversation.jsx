@@ -99,8 +99,10 @@ UserConversation = React.createClass({
     //get message
     let msg = $('#messageToSend').val()
 
+    //sanitize
+    msg = sanitizeHtml(msg)
+
     //send the message
-    //TODO sanitize
     let send = this.data.conversation.sendMessage(msg)
 
     //increase the limit so the current conversation stays on the screen
