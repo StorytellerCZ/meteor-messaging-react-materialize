@@ -1,5 +1,12 @@
 // TODO: separate into 3 components: conversationWindow, conversationReply, conversationParticipants
+/**
+ * @class component UserConversation
+ * @classdesc Component to display a full user conversation.
+ */
 UserConversation = React.createClass({
+  propTypes: {
+    conversationId: React.PropTypes.string
+  },
   mixins: [ReactMeteorData],
   getInitialState(){
     return {
@@ -12,7 +19,7 @@ UserConversation = React.createClass({
   getMeteorData(){
     if(this.props.conversationId){
       const handleConv = Meteor.subscribe("messagesFor", this.props.conversationId, {limit: this.state.msgLimit, skip: 0})
-      const handleMsg = Meteor.subscribe("conversation", this.props.conversationId);
+      const handleMsg = Meteor.subscribe("conversation", this.props.conversationId)
 
       if(handleConv.ready() && handleMsg.ready()){
         let msg = Meteor.messages.find({conversationId: this.props.conversationId}, {sort: {date: 1}}).fetch()
@@ -40,14 +47,14 @@ UserConversation = React.createClass({
           handleConv.stop()
           handleMsg.stop()
           //redirect back
-          FlowRouter.go("/pm")
+          FlowRouter.go("pm-overview")
         }
       }
       return {
         dataLoaded: false
       }
     } else {
-      FlowRouter.go("/pm")
+      FlowRouter.go("pm-overview")
     }
   },
   componentDidMount(){
@@ -143,7 +150,7 @@ UserConversation = React.createClass({
           </div>
         </div>
         <div className="chatParticipants col hide-on-small-only m2 l2">
-          <div className="card-panel"></div>
+          <ConversationParticipants conversationId={this.props.conversationId} />
         </div>
       </div>
 

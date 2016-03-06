@@ -1,3 +1,7 @@
+/**
+ * @class component UserConversationOverview
+ * @classdesc Overview of all conversations that the user is involved in.
+ */
 UserConversationOverview = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData(){
@@ -25,7 +29,7 @@ UserConversationOverview = React.createClass({
           users = users + ", " + usersArray[i]
         }
 
-        return <li className="collection-item avatar">
+        return <li className="collection-item avatar" key={conversation._id}>
           <a href={FlowRouter.path("pm-conversation", {conversationId: conversation._id})} >
           <i className="material-icons circle">mail</i>
           <span className="title">{users}</span>

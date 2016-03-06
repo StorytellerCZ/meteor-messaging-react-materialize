@@ -1,4 +1,8 @@
-//TODO in Meteor 1.3 integrate https://github.com/moroshko/react-autosuggest
+/**
+ * @class component UserNewConversation
+ * @classdesc Start a new conversation
+ * TODO in Meteor 1.3 integrate https://github.com/moroshko/react-autosuggest
+ */
 UserNewConversation = React.createClass({
   componentDidMount(){
     $('.newPmTrigger').leanModal()

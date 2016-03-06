@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.3.0 - 2016/3/07
+
+## New
+
+*   Added participants component to conversation
+
+## Changes
+
+*   FlowRouter paths now point to route name rather than exact path
+
 ## v0.2.1 - 2016/3/06
 
 ### Changes

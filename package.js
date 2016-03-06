@@ -1,6 +1,6 @@
 Package.describe({
   name: 'storyteller:messaging-react-materialize',
-  version: '0.2.1',
+  version: '0.3.0',
   summary: 'Messaging between users',
   git: 'https://github.com/StorytellerCZ/meteor-messaging-react-materialize.git',
   documentation: 'README.md'
@@ -11,11 +11,17 @@ Package.onUse(function(api) {
   api.use(['meteor', 'ecmascript', 'react@0.14.3', 'check', 'accounts-password']);
 
   //other packages in use
-  api.use(['socialize:messaging@0.4.5', 'djedi:sanitize-html-client@1.11.2', 'momentjs:moment@2.11.2', 'storyteller:messaging-server@0.1.1']);
+  api.use(['socialize:messaging@0.4.5', 'djedi:sanitize-html-client@1.11.2', 'momentjs:moment@2.11.2', 'storyteller:messaging-server@0.1.2']);
 
   api.imply(['socialize:messaging', 'djedi:sanitize-html-client', 'momentjs:moment'])
 
-  api.addFiles(['components/Conversation.jsx', 'components/UserOverview.jsx', 'components/NewConversation.jsx', 'components/NewMessage.jsx'], "client");
+  api.addFiles([
+    'components/Conversation.jsx',
+    'components/UserOverview.jsx',
+    'components/NewConversation.jsx',
+    'components/NewMessage.jsx',
+    'components/Participants.jsx'
+  ], "client");
 
   api.addFiles('searchSuggestions.css');
 
