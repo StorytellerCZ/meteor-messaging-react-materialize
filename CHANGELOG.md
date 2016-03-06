@@ -1,10 +1,14 @@
 # Changelog
 
+## v0.2.0 - 2016/3/05
+
+*   Moved server functionality to its own package
+
 ## v0.1.1 - 2016/2/24
 
-* Updated dependencies
-* Added sanitization
+*   Updated dependencies
+*   Added sanitization
 
 ## v0.1.0 - 2016/2/16
 
-* Initial release
+*   Initial release
