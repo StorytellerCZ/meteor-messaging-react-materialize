@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.3.1 - 2016/3/08
+
+## Changes
+
+*   Updated Momentjs dependency
+
 ## v0.3.0 - 2016/3/07
 
 ## New
