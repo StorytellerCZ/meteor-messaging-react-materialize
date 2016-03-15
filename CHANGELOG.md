@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.3.2 - 2016/3/14
+
+### Updates
+
+*   Dependency update
+
 ## v0.3.1 - 2016/3/14
 
 ## Changes
