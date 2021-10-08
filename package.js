@@ -1,27 +1,27 @@
 Package.describe({
   name: 'storyteller:messaging-react-materialize',
-  version: '0.3.3',
+  version: '0.3.4',
   summary: 'Messaging between users',
   git: 'https://github.com/StorytellerCZ/meteor-messaging-react-materialize.git',
-  documentation: 'README.md'
+  documentation: 'README.md',
+  deprecated: true
 });
 
 Package.onUse(function(api) {
-  api.versionsFrom('1.2.1');
+  api.versionsFrom(['1.3', '2.3']);
   api.use([
     'meteor',
     'ecmascript',
-    'react@0.14.3',
     'check',
     'accounts-password'
   ]);
 
   //other packages in use
   api.use([
-    'socialize:messaging@0.5.1',
+    'socialize:messaging@1.2.3',
     'djedi:sanitize-html-client@1.11.3',
-    'momentjs:moment@2.12.0',
-    'storyteller:messaging-server@0.1.5'
+    'momentjs:moment@2.29.1',
+    'storyteller:messaging-server@1.2.0'
   ]);
 
   api.imply([
